@@ -10,5 +10,8 @@
     "server"
   ],
   "author": "varun - Frozen Programmer",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mongoos": "^0.0.1-security"
+  }
 }
