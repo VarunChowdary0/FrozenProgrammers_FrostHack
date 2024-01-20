@@ -4,13 +4,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Regiter from './Components/Regiter';
+import DashBorard from './Components/DashBorard';
 
 const router = createBrowserRouter([
   {
     path : '/',
     element : 
-    <div className=' h-screen w-full flex 
-    items-center justify-center'>Home</div>
+    <DashBorard/>
   },
   {
     path:'/register',
