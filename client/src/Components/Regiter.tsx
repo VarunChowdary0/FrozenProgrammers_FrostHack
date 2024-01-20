@@ -96,7 +96,7 @@ const Regiter:React.FC = () => {
                     </div>
                     <div className=' fixed bottom-5 right-5 px-3 py-2 bg-teal-600 
                     rounded-md text-white'>
-                        Know about me
+                        Know about me!!
                     </div>
                     </div>
                 </>
