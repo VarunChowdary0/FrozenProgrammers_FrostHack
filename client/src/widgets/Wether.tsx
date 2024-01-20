@@ -3,7 +3,7 @@ import React from 'react'
 const Wether:React.FC = () => {
   return (
     <div className=' bg-white/0 h-[300px] w-[400px] relative'>
-      <iframe className=' h-[365px] w-[500px] overflow-hidde' srcDoc={`
+      <iframe className=' h-[365px] w-[500px] overflow-hidde ' srcDoc={`
         <script>
         (function(d, s, id) {
             if (d.getElementById(id)) {
