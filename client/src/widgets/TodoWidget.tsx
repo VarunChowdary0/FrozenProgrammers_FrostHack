@@ -25,7 +25,7 @@ const TodoWidget:React.FC = () => {
                         
                     </div>
                     <div className=' absolute px-2 py-1 text-white
-                     rounded-md bg-indigo-600 bottom-0 right-0'>
+                     rounded-md bg-indigo-600 bottom-0 right-0 active:scale-90 transition-all'>
                         Add task
                     </div>
             </div>

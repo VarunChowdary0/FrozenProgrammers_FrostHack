@@ -19,7 +19,9 @@ const router = createBrowserRouter([
 ])
 const App:React.FC = () => {
   return (
-    <RouterProvider router={router}/>
+    <div className=' select-none'>
+      <RouterProvider router={router}/>
+    </div>
   )
 }
 
