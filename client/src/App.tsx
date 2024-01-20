@@ -19,9 +19,15 @@ const router = createBrowserRouter([
 ])
 const App:React.FC = () => {
   return (
-    <div className=' select-none'>
-      <RouterProvider router={router}/>
-    </div>
+    <>
+      <div className=' select-none max-sm:hidden'>
+        <RouterProvider router={router}/>
+      </div>
+      <div className=' opacity-0 h-0 scale-0 max-sm:opacity-100
+       max-sm:scale-100 max-sm:h-screen w-full flex items-center justify-center'>
+          We are Sorry, this is not for Mobiles. 
+      </div>
+    </>
   )
 }
 
