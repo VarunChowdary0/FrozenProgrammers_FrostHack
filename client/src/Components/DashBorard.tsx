@@ -1,6 +1,7 @@
 import React from 'react'
 import Weather from '../widgets/Wether'
 import TodoWidget from '../widgets/TodoWidget'
+import TimeWidget from '../widgets/TimeWidget'
 
 const DashBorard:React.FC = () => {
   return (
@@ -8,8 +9,8 @@ const DashBorard:React.FC = () => {
         <div className=' h-fit  bg-red-400/0 overflow-x-auto
         w-full max-sm:w-screen  flex items-center justify-around 
         max-sm:gap-5 '>
-            <div className=' max-sm:w-screen h-[80] w-[250px] '>
-                <div className=' scale-[0.65] max-md:scale-[0.5] '>
+            <div className=' max-sm:w-screen h-[80] w-fit bg-white/0  '>
+                <div className=' scale-[0.7] '>
                     <Weather/>
                 </div>
             </div>
@@ -17,8 +18,8 @@ const DashBorard:React.FC = () => {
               bg-white rounded-md p-2 flex '>
                   <TodoWidget/>
             </div>
-            <div className=' max-sm:w-screen h-[80%] w-[250px] bg-red-500/10 '>
-                Time Widget
+            <div className=' max-sm:w-screen h-[80%] w-fit  '>
+                <TimeWidget/>
             </div>
         </div>
     </div>
