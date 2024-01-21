@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import Weather from '../widgets/Wether'
 import TodoWidget from '../widgets/TodoWidget'
 import TimeWidget from '../widgets/TimeWidget'
@@ -105,7 +105,7 @@ const [RecentS,setRecents] = useState<Array<string>>(["frosthacks hyd","MHL","Mo
                         SearchNow();
                     }
                 }}
-                type="text" placeholder="What's in your mind ?" value={SearchKey}
+                type="text" placeholder="What's on your mind ?" value={SearchKey}
                 onChange={(e)=>{
                     setSearchKey(e.target.value);
                 }} 

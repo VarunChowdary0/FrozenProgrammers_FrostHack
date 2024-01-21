@@ -8,12 +8,18 @@ import DashBorard from './Components/DashBorard';
 import MenuBar from './Components/MenuBar';
 import { GlobalContextProvider } from './contexts/GlobalContext';
 import LogOutPage from './Components/LogOutPage';
+import ProfilePage from './Components/ProfilePage';
 
 const router = createBrowserRouter([
   {
     path : '/',
     element : 
     <DashBorard/>
+  },
+  {
+    path : '/profile',
+    element : 
+    <ProfilePage/>
   },
   {
     path:'/register',

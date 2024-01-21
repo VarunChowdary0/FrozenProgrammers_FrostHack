@@ -1,4 +1,5 @@
 import React from 'react'
+import CloseIcon from '../icons/CloseIcon';
 
 interface CurrentProps{
     URL : string;
@@ -14,9 +15,11 @@ const BookMarkComp:React.FC<CurrentProps> = (props) => {
            <img className=' w-[40px]' src={`${props.URL}favicon.ico`} alt="NF" /> 
         </a>
         <p className=' max-w-[70px] truncate'>{props.title}</p>
-        <div className='__Remove__ hover:cursor-pointer
-         h-3 w-3 absolute top-[-px] right-[-3px] 
-        rounded-full bg-red-600'></div>
+        <div className=' opacity-0 hover:cursor-pointer fill-white
+         h-4 w-4 hover:opacity-100 absolute top-[-px] right-[-3px] 
+        rounded-full bg-[#1d1d1d] backdrop-blur-md flex items-center justify-center'>
+          <CloseIcon/>
+        </div>
     </div>
   )
 }

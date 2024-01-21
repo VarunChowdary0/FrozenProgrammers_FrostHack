@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { create_my_Account } from '../Controllers/RegisterController';
 
 const Regiter:React.FC = () => {
     const [isSigningUP,setSigning] = useState<boolean>(true);
@@ -9,12 +10,36 @@ const Regiter:React.FC = () => {
     const toggle = () =>{
         setSigning(!isSigningUP);
     }
+    const SignUP =  () => {
+        if(fullName.trim()!==""){
+            if(Email.trim()!==""){
+                if(password.trim().length > 7){
+                    create_my_Account(fullName,Email,password)
+                    .then((res)=>{
+                        console.log(res);
+                    })
+                    .catch((err)=>{
+                        console.log(err);
+                    })
+                }
+                else{
+                    console.log("Short PW");
+                }
+            }
+            else{
+                console.log("Empty mail");
+            }
+        }
+        else{
+            console.log("No Name");
+        }
+    } 
   return (
     <>
        <div className=' h-screen w-full flex items-center justify-center gap-10'>
         <div className=' h-full relative'>
             <img className=' scale-75 h-full max-sm:hidden' src="
-https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png            "
+                https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png            "
             alt="NF" />
             {/* <p className=' absolute top-[300px] text-6xl text-center text-dark_bg_secondry/40 font-bold'>
             Elevating web navigation through seamless innovation.
@@ -31,7 +56,7 @@ https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png            "
                     </div>
 
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form className="space-y-6" action="#" method="POST">
+                        <form className="space-y-6"  method="POST">
 
                         <div>
                             <label  className="block text-sm font-medium leading-6 text-gray-900">Full name</label>
@@ -82,10 +107,10 @@ https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png            "
                         </div>
 
                         <div>
-                            <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600
+                            <div onClick={SignUP} className="flex w-full justify-center rounded-md bg-indigo-600
                               py-1.5 text-sm font-semibold leading-6 text-white shadow-sm px-3
                               hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
-                               focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
+                               focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</div>
                         </div>
                         </form>
 
