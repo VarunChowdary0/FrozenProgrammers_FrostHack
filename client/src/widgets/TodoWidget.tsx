@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import TrashIcon from '../icons/TrashIcon'
 import PenIcon from '../icons/PenIcon'
 import AddTaskPopUp from '../PopUps/AddTaskPopUp'
+import { GlobalContext } from '../contexts/GlobalContext'
 
 const TodoWidget:React.FC = () => {
-    const [MyTasks,AddTask] = useState<Array<string>>(
-        ["Upload PWO lab sheets","Book Train ticket","Mail PPT","Learn SQL"]
-        )
+    const {MyTasks,AddTask} = useContext<any>(GlobalContext);
     const [showAddPopUp,setPopUp] = useState<boolean>(false);
     const remove = (id:number) => {
         AddTask([...MyTasks.slice(0, id), ...MyTasks.slice(id + 1)]);
@@ -17,7 +16,7 @@ const TodoWidget:React.FC = () => {
                     <div className=' max-h-[150px] snap-y flex 
                     flex-col-reverse gap-3 w-full overflow-y-auto'>
                         {
-                            MyTasks.map((task,idx)=>
+                            MyTasks.map((task:string,idx:number)=>
                             <div key={"task-"+idx+1} className=' py-4 max-h-[40px] w-[95%] bg-[#2e2d2d] rounded-md 
                                 flex items-center px-3 justify-between snap-center'>
                                 <p className=' text-sm text-white'>{task}</p>

@@ -13,10 +13,23 @@ export const create_my_Account = (name:string,email:string,password:string) =>{
             USER_UID
         })
         .then((res)=>{
-            console.log(res.data);
+            return {status:true,data:res.data.data}
         })
         .catch((err)=>{
-            console.log(err);
+            return {status:false,data:"NO"}
+        })       
+}
+
+export const login_to_account = (email:string,password:string) => {
+    return axios
+        .post(server+"login",{
+            email,
+            password
         })
-        
+        .then((res)=>{
+            return {status:true,data:res.data.data}
+        })
+        .catch((err)=>{
+            return {status:false,data:"NO"}
+        })  
 }

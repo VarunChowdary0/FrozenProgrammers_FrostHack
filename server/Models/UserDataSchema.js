@@ -20,10 +20,8 @@ const UserSchema = new mongoose.Schema({
         require : true ,
     },
     todos : {
-        type : {
-            type : Array ,
-            default : []
-        }
+        type : Array ,
+        default : []
     },
     Recents : {
         type : Array,

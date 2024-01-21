@@ -13,6 +13,7 @@ const RecentSearches:React.FC<CurrentProps> = (props) => {
         const lin = `${props.SearchEng}${encodeURIComponent(props.RecentS[idx])}`;
         window.open(lin,"_blank");
 }
+console.log(props.RecentS);
   return (
     <div className=' h-[200px] w-[300px] rounded-md snap-y
      bg-white p-3 flex flex-col gap-[10px] overflow-y-auto pt-0'>

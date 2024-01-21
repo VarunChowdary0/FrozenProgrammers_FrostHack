@@ -20,11 +20,11 @@ const AddTaskPopUp:React.FC<CurrentProps> = (props) => {
   return (
     <>
         <div onClick={closePopup} className='fixed top-0 bottom-0 left-0 right-0 backdrop-blur-sm
-         bg-black/30'>
+         bg-black/30 z-[1000]'>
         </div>
         <div className=' fixed left-0 right-0 
     oh-fit wp-fit flex items-center justify-center mt-[10vh]
-         max-sm:w-[90%]' >
+         max-sm:w-[90%] z-[1001]' >
             <div className=' w-fit bg-white px-3 py-10 rounded-md'>
             <div className=' px-4 pb-6 text-sm text-[#6c6c6c]'>Add </div>
             <div className=' flex relative'>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { create_my_Account } from '../Controllers/RegisterController';
+import { create_my_Account, login_to_account } from '../Controllers/RegisterController';
 
 const Regiter:React.FC = () => {
     const [isSigningUP,setSigning] = useState<boolean>(true);
@@ -7,19 +7,41 @@ const Regiter:React.FC = () => {
     const [fullName,setFullname] = useState<string>("");
     const [Email,setEmail] = useState<string>("");
     const [password,setPassword] = useState<string>("");
+    const [flasher,setFlasher] = useState<string>("");
+    const [isLoading,setLoad] = useState<boolean>(false);
     const toggle = () =>{
         setSigning(!isSigningUP);
     }
-    const SignUP =  () => {
+    const SignUP = async  () => {
+        setLoad(true);
         if(fullName.trim()!==""){
             if(Email.trim()!==""){
                 if(password.trim().length > 7){
-                    create_my_Account(fullName,Email,password)
+                   await create_my_Account(fullName,Email,password)
                     .then((res)=>{
+                    setLoad(false);
                         console.log(res);
+                        if(res.status){
+                            setFlasher("Account created");
+                            setTimeout(()=>{
+                                setFlasher("");
+                                setSigning(false);
+                            },1000);
+                        }
+                        else{
+                            setFlasher("Something went wrong !");
+                        setTimeout(()=>{
+                            setFlasher("");
+                        },1000);
+                        }
                     })
                     .catch((err)=>{
+                    setLoad(false);
                         console.log(err);
+                        setFlasher("Something went wrong !");
+                        setTimeout(()=>{
+                            setFlasher("");
+                        },1000);
                     })
                 }
                 else{
@@ -34,6 +56,42 @@ const Regiter:React.FC = () => {
             console.log("No Name");
         }
     } 
+    const Login = async () =>{
+        setLoad(true);
+        if(Email.trim()!==""){
+            if(password.trim().length>7){
+                login_to_account(Email,password)
+                .then((res)=>{
+                    setLoad(false);
+                        console.log(res.data);
+                        localStorage.setItem("MyPageData",JSON.stringify(res.data));
+                        localStorage.setItem("logInStatus_",JSON.stringify(true));
+                        if(res.status){
+                            setFlasher("Login Sussess");
+                            setTimeout(()=>{
+                                setFlasher("");
+                                setSigning(false);
+                                window.location.href="/";
+                            },1500);
+                        }
+                        else{
+                            setFlasher("Incorrect Credentials !");
+                        setTimeout(()=>{
+                            setFlasher("");
+                        },1000);
+                        }
+                    })
+                    .catch((err)=>{
+                    setLoad(false);
+                        console.log(err);
+                        setFlasher("Incorrect Credentials !");
+                        setTimeout(()=>{
+                            setFlasher("");
+                        },1000);
+                    })
+            }
+        }
+    }
   return (
     <>
        <div className=' h-screen w-full flex items-center justify-center gap-10'>
@@ -107,13 +165,16 @@ const Regiter:React.FC = () => {
                         </div>
 
                         <div>
+                            {isLoading?
+                            <div className=' w-full text-center'>Loading...</div>:
                             <div onClick={SignUP} className="flex w-full justify-center rounded-md bg-indigo-600
                               py-1.5 text-sm font-semibold leading-6 text-white shadow-sm px-3
                               hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
                                focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</div>
+                            }
                         </div>
                         </form>
-
+                        <p className=' text-center pt-3'>{flasher}</p>
                         <p className="mt-10 text-center text-sm text-gray-500">
                         Already have an Account?
                         <p onClick={toggle} className="font-semibold hover:cursor-pointer leading-6 text-indigo-600 
@@ -171,10 +232,17 @@ const Regiter:React.FC = () => {
                         </div>
 
                         <div>
-                            <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                            {isLoading?
+                            <div className=' w-full text-center'>Loading...</div>
+                            :
+                            <div onClick={Login} className="flex w-full justify-center rounded-md bg-indigo-600
+                              py-1.5 text-sm font-semibold leading-6 text-white shadow-sm px-3
+                              hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
+                               focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</div>
+                            }
                         </div>
                         </form>
-
+                        <p className=' text-center pt-3'>{flasher}</p>
                         <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?
                         <p onClick={toggle} className="font-semibold leading-6 hover:cursor-pointer text-indigo-600 

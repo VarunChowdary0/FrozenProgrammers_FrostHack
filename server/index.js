@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const DATA_MODEL = require('./Models/UserDataSchema');
+const e = require('express');
 
 const app = express();
 
@@ -29,11 +30,40 @@ app.get('/',(req,res)=>{
 app.post('/signup',(req,res)=>{
     count++;
     console.log("/signup"+" ->"+count);
-    console.log(req.body);
-    // DATA_MODEL.create(req.body)
-    //     .then((resp)=>{
-    //         res.status(200).json({message:"OK",data,})
-    //     })
+    DATA_MODEL.create(req.body)
+        .then((resp)=>{
+            res.status(200).json({message:"OK",data:resp})
+        })
+        .catch((err)=>{
+            // console.log(err)
+            res.status(400).json({message:"NO"})
+        })
+})
+
+app.post('/login',(req,res)=>{
+    count++;
+    console.log("/login"+" ->"+count);
+    DATA_MODEL.findOne(req.body)
+        .then((resp)=>{
+            if(resp !== null){
+                res.status(200).json({message:"OK",data:resp});
+            }
+            else{
+                res.status(400).json({message:"NO"});
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+            res.status(400).json({message:"NO"});
+        })
+})
+
+app.post('/update',(req,res)=>{
+    count++;
+    console.log("/update"+" -> "+count);
+
+    const USER_UID = req.body;
+    console.log(USER_UID);
 })
 
 app.listen(1800, () => {

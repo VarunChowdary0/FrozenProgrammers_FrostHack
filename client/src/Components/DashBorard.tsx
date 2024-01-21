@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, {  useContext, useState } from 'react'
 import Weather from '../widgets/Wether'
 import TodoWidget from '../widgets/TodoWidget'
 import TimeWidget from '../widgets/TimeWidget'
@@ -7,57 +7,14 @@ import SearchIcon from '../icons/SearchIcon'
 import BookMarkComp from '../widgets/BookMarkComp'
 import ArrowIcon from '../icons/ArrowIcon'
 import NewsFeed from './NewsFeed'
+import { GlobalContext } from '../contexts/GlobalContext'
+import AddNewBookMark from '../PopUps/AddNewBookMark'
+import AddSync from '../Controllers/AddSync'
 
 const DashBorard:React.FC = () => {
-    const [myApps,setMyApps] = useState<Array<{
-        URL:string,
-        title : string
-    }>>(
-        [
-            {"URL": "https://www.youtube.com/", "title": "youtube"},
-            {"URL": "https://mail.google.com/", "title": "Gmail"},
-            {"URL": "https://drive.google.com/", "title": "Drive"},
-            {"URL": "https://www.instagram.com/", "title": "instagram"},
-            {"URL": "https://dashboard.render.com/", "title": "Render"},
-            {"URL": "https://samvidha.iare.ac.in/", "title": "Samvidha"},
-            {"URL": "https://github.com/", "title": "Git Hub"},
-            {"URL": "https://chat.openai.com/", "title": "Chat GPT"},
-            {"URL": "https://fontawesome.com/", "title": "Fontawesome"},
-            {"URL": "https://cloud.mongodb.com/", "title": "Data Base"},
-            {"URL": "https://www.hotstar.com/", "title": "Hotstar"},
-            {"URL": "https://buildit.iare.ac.in/", "title": "Build IT"},
-            {"URL": "https://uiverse.io/", "title": "uiverse"},
-            {"URL": "https://codepen.io/", "title": "Code Pen"},
-            {"URL": "https://bard.google.com/", "title": "BRAD"},
-            {"URL": "https://twitter.com/", "title": "Twitter"},
-            {"URL": "https://www.facebook.com/", "title": "Facebook"},
-            {"URL": "https://teleporthq.io/", "title": "Teleport HQ"},
-            {"URL": "https://aniwatch.to/", "title": "Zoro"},
-            {"URL": "https://blog-it-ten.vercel.app/", "title": "Blog-IT"},
-            {"URL": "https://www.kaggle.com/", "title": "KAGGLE"},
-            {"URL": "https://www.codechef.com/", "title": "code chef"},
-            {"URL": "https://vercel.com/", "title": "vercel"},
-            {"URL": "https://smashkarts.io/", "title": "smashkarts"},
-            {"URL": "https://uiball.com/", "title": "Ui Ball"},
-            {"URL": "https://web.telegram.org/", "title": "Telegram"},
-            {"URL": "https://www.speedtest.net/", "title": "Ookla"},
-            {"URL": "https://leetcode.com/", "title": "leetcode"},
-            {"URL": "https://www.amazon.in/", "title": "Amazon"},
-            {"URL": "https://drive.google.com/drive/folders/1bODVssOlCYPQSkkW3pDxQ18Ux55lzVik?usp=sharing", "title": "Link"},
-            {"URL": "https://chat-room-kohl-pi.vercel.app/", "title": "My Chat"},
-            {"URL": "https://video-calling-web-rtc.vercel.app/", "title": "Pick"},
-            {"URL": "https://bankai4meet.vercel.app/", "title": "bankai4meet"},
-            {"URL": "https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/", "title": "DSA learn"},
-            {"URL": "https://rezzumy.vercel.app", "title": "REzZUMY"},
-            {"URL": "https://discord.com/", "title": "Discord"},
-            {"URL": "https://turso.tech/app", "title": "Turso"}
-          ]
-          
-    );
+    const {myApps,setMyApps,RecentS,setRecents} = useContext<any>(GlobalContext) 
 
-const [RecentS,setRecents] = useState<Array<string>>(["frosthacks hyd","MHL","MongoDB","GoDaddy"]);
-
-
+    console.log(RecentS)
     const [showNewsFeed,setNewsFeed] = useState<boolean>(false);
     const [SearchKey,setSearchKey] = useState<string>("");
 
@@ -70,6 +27,8 @@ const [RecentS,setRecents] = useState<Array<string>>(["frosthacks hyd","MHL","Mo
             setSearchKey("");
         }
     }
+
+    const [showNewAddwr,setShow] = useState<boolean>(false);
 
   return (
     <div className=' h-screen w-full p-2 bg-[#f4f2f5] 
@@ -119,13 +78,14 @@ const [RecentS,setRecents] = useState<Array<string>>(["frosthacks hyd","MHL","Mo
         </div>
         <div className=' max-h-[30vh] w-full bg-fuchsia-400/0 py-3 flex justify-center'>
             <div className=' w-[80%] h-full flex flex-wrap gap-8 overflow-y-scroll snap-y'>
-                {myApps.map((app,idx)=>
+                {myApps.map((app:any,idx:number)=>
                     <div key={"App_"+idx} className=' snap-start'>
-                        <BookMarkComp URL={app.URL} title={app.title}/>
+                        <BookMarkComp idx={idx} setMyApps={setMyApps} 
+                        myApps={myApps} URL={app.URL} title={app.title}/>
                     </div>
                 )}
                 <div className=' h-fit w-fit flex flex-col gap-2'>
-            <div 
+            <div  onClick={()=>{setShow(true)}}
             className=' h-[70px] w-[70px] bg-white dark:bg-[#2d2b2b]
             rounded-xl flex items-center justify-center text-2xl'>
                 +
@@ -150,6 +110,8 @@ const [RecentS,setRecents] = useState<Array<string>>(["frosthacks hyd","MHL","Mo
          fixed bottom-0 right-0 left-0 transition-all duration-300`}>
             <NewsFeed setNewsFeed={setNewsFeed}/>
          </div>
+         {showNewAddwr&&<AddNewBookMark AddApps={setMyApps} AllApps={myApps} setShow={setShow}/>}
+         <AddSync/>
     </div>
   )
 }
