@@ -90,7 +90,7 @@ https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png            "
                         </form>
 
                         <p className="mt-10 text-center text-sm text-gray-500">
-                        Not a member?
+                        Already have an Account?
                         <p onClick={toggle} className="font-semibold hover:cursor-pointer leading-6 text-indigo-600 
                         hover:text-indigo-500 pl-3">Login ?</p>
                         </p>
