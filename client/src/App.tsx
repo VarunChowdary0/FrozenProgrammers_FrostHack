@@ -9,6 +9,7 @@ import MenuBar from './Components/MenuBar';
 import { GlobalContextProvider } from './contexts/GlobalContext';
 import LogOutPage from './Components/LogOutPage';
 import ProfilePage from './Components/ProfilePage';
+import Settings from './Components/Settings';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,13 @@ const router = createBrowserRouter([
     element:
     <>
       <ProfilePage/>
+    </>
+  }
+  ,{
+    path:"/settings",
+    element:
+    <>
+      <Settings/>
     </>
   }
 ])
