@@ -16,6 +16,7 @@ export const create_my_Account = (name:string,email:string,password:string) =>{
             return {status:true,data:res.data.data}
         })
         .catch((err)=>{
+            console.log(err)
             return {status:false,data:"NO"}
         })       
 }
@@ -30,6 +31,7 @@ export const login_to_account = (email:string,password:string) => {
             return {status:true,data:res.data.data}
         })
         .catch((err)=>{
+            console.log(err)
             return {status:false,data:"NO"}
         })  
 }

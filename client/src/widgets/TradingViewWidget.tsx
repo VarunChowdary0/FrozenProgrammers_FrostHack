@@ -1307,7 +1307,7 @@ const TradingViewWidget:React.FC = () => {
     <div className=' flex flex-wrap justify-around space-y-4 overflow-y-auto'>
       {
         NewsArr.slice(NewsArr.length-50).map((wl:any,idx)=>
-        <div className=' h-[300px] w-[400px] rounded-md '>
+        <div key={idx} className=' h-[300px] w-[400px] rounded-md '>
           <img src={wl.urlToImage} alt="" />
         </div>
         )
