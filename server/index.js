@@ -61,9 +61,20 @@ app.post('/login',(req,res)=>{
 app.post('/update',(req,res)=>{
     count++;
     console.log("/update"+" -> "+count);
-
-    const USER_UID = req.body;
-    console.log(USER_UID);
+    const USER_UID = req.body.USER_UID;
+    // console.log(req.body.DATA);
+    DATA_MODEL.findOneAndUpdate(
+        { USER_UID: USER_UID },
+        { $set: req.body.DATA },
+        { new: true })
+        .then((resp)=>{
+            // console.log(resp)
+            res.status(200).json({message:"OK",data:resp})
+        }) 
+        .catch((Err)=>{
+            console.log(Err)
+            res.status(400).json({message:"NO"})
+        })
 })
 
 app.listen(1800, () => {
