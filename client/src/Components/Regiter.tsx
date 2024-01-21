@@ -13,11 +13,12 @@ const Regiter:React.FC = () => {
     <>
        <div className=' h-screen w-full flex items-center justify-center gap-10'>
         <div className=' h-full relative'>
-            <img className=' scale-75 h-full max-sm:hidden' src="https://img.freepik.com/free-vector/web-search-concept-illustration_114360-4767.jpg?w=1060&t=st=1705752123~exp=1705752723~hmac=8fc13c9c628d6541c9d4a24dd7af1b7f37b4537739ad9c199861141b3411a6bd"
+            <img className=' scale-75 h-full max-sm:hidden' src="
+https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png            "
             alt="NF" />
-            <p className=' absolute top-[300px] text-6xl text-center text-dark_bg_secondry/40 font-bold'>
+            {/* <p className=' absolute top-[300px] text-6xl text-center text-dark_bg_secondry/40 font-bold'>
             Elevating web navigation through seamless innovation.
-            </p>
+            </p> */}
         </div>
         <div className=' h-fit w-[350px] shadow-lg'>
                {

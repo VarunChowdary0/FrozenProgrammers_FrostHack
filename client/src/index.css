@@ -16,3 +16,17 @@
     background-color: #3f51b5; /* color of the thumb */
     border-radius: 6px; /* roundness of the thumb */
   }
+
+.__Remove__{
+opacity: 0;
+transition: all 0.2s;
+}
+
+
+.__Skill__:hover .__Remove__{
+opacity: 1;
+}
+
+.MyNewser{
+    clip-path: polygon(9.48% 13.3%, 48.4% 13.3%, 87.33% 13.3%, 100% 100%, 100% 100%, 0% 100%);
+}

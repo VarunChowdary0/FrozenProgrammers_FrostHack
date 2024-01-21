@@ -8,6 +8,9 @@ const TodoWidget:React.FC = () => {
         ["Upload PWO lab sheets","Book Train ticket","Mail PPT","Learn SQL"]
         )
     const [showAddPopUp,setPopUp] = useState<boolean>(false);
+    const remove = (id:number) => {
+        AddTask([...MyTasks.slice(0, id), ...MyTasks.slice(id + 1)]);
+    } 
   return (
     <div className=' max-sm:w-screen min-h-[200px] h-[80%] w-[350px]
               bg-white rounded-md p-2 flex relative flex-col gap-3 max-h-[150px]'>
@@ -20,7 +23,9 @@ const TodoWidget:React.FC = () => {
                                 <p className=' text-sm text-white'>{task}</p>
                                 <div className=' flex w-[50px] justify-around'>
                                     <PenIcon/>
-                                    <TrashIcon/>
+                                    <div onClick={()=>remove(idx)}>
+                                        <TrashIcon/>
+                                    </div>
                                 </div>
                             </div>
                             )
@@ -28,7 +33,7 @@ const TodoWidget:React.FC = () => {
                         
                     </div>
                     <div onClick={()=>setPopUp(true)} className=' absolute px-2 py-1 text-white
-                     rounded-md bg-indigo-600 bottom-0 right-0 active:scale-90 transition-all'>
+                     rounded-md bg-indigo-600 bottom-1 scale-90 right-1 active:scale-90 transition-all'>
                         Add task
                     </div>
             {showAddPopUp && 
