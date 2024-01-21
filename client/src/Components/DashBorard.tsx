@@ -109,6 +109,7 @@ const DashBorard:React.FC = () => {
          fixed bottom-0 right-0 left-0 transition-all duration-300`}>
             <NewsFeed setNewsFeed={setNewsFeed}/>
          </div>
+         
          {showNewAddwr&&<AddNewBookMark AddApps={setMyApps} AllApps={myApps} setShow={setShow}/>}
          <AddSync/>
     </div>

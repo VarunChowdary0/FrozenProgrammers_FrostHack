@@ -29,6 +29,10 @@ const TodoWidget:React.FC = () => {
                             </div>
                             )
                         }
+                        {
+                            (MyTasks.length === 0) &&
+                            <div className=' h-[200px] w-full flex items-center justify-center'>No Tasks</div>
+                        }
                         
                     </div>
                     <div onClick={()=>setPopUp(true)} className=' absolute px-2 py-1 text-white

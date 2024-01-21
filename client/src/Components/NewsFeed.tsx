@@ -1,4 +1,5 @@
 import React from 'react'
+// import TradingViewWidget from '../widgets/TradingViewWidget';
 
 interface CurrentProps{
     setNewsFeed:React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,10 +12,8 @@ const NewsFeed:React.FC<CurrentProps> = (props) => {
             <p className=' text-white text-2xl px-3 py-2 sticky top-0 '>
               Hot news
             </p>
-            <div className=' h-fit w-full bg-blue-800'>
-              {/* <div className=' relative bg-black'>
-                <TradingViewWidget/>
-              </div> */}
+            <div className=' h-fit w-full bg-blue-800/10 px-10'>
+              {/* <TradingViewWidget/> */}
             </div>
         </div>
     </div>
