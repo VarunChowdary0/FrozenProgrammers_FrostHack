@@ -5,13 +5,14 @@ import axios from 'axios';
 const server = "http://localhost:1800/";
 
 const AddSync:React.FC = () => {
-    const {myApps,USER_UID,email,password,MyTasks,RecentS
+    const {myApps,USER_UID,email,password,MyTasks,RecentS,fullname
     } = useContext<any>(GlobalContext);
 
     useEffect(()=>{
         const DATA = {
             USER_UID : USER_UID,
             email : email,
+            name ,
             password:password,
             todos:MyTasks,
             Recents:RecentS,

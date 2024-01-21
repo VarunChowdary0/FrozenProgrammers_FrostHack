@@ -13,7 +13,6 @@ import AddSync from '../Controllers/AddSync'
 
 const DashBorard:React.FC = () => {
     const {myApps,setMyApps,RecentS,setRecents} = useContext<any>(GlobalContext) 
-
     console.log(RecentS)
     const [showNewsFeed,setNewsFeed] = useState<boolean>(false);
     const [SearchKey,setSearchKey] = useState<string>("");
