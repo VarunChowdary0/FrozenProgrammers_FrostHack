@@ -28,7 +28,7 @@ const BookMarkComp:React.FC<CurrentProps> = (props) => {
          rounded-xl flex items-center justify-center'>
            <img className=' w-[40px]' src={`${props.URL}favicon.ico`} alt="NF" /> 
         </a>
-        <p className=' max-w-[70px] truncate'>{props.title}</p>
+        <p className=' max-w-[70px] truncate text-center'>{props.title}</p>
         <div onClick={()=>{removeItem(props.idx)}} className=' opacity-0 hover:cursor-pointer fill-white
          h-4 w-4 hover:opacity-100 absolute top-[-px] right-[-3px] 
         rounded-full bg-[#1d1d1d] backdrop-blur-md flex items-center justify-center'>

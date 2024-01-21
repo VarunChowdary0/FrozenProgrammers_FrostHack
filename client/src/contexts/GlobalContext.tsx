@@ -27,6 +27,8 @@ interface UUID{
 
   todos : Array<string>;
 
+  name:string;
+
 }
 interface ContextTypeManger extends 
 Test,
@@ -106,7 +108,10 @@ const GlobalContextProvider: React.FC<ContextTypeMangerProps> = ({ children }) =
   const [MyTasks,AddTask] = useState<Array<string>>(
     // ["Upload PWO lab sheets","Book Train ticket","Mail PPT","Learn SQL"]
     storedTsks.todos
+
     )
+    const name = 
+    storedData.name;
   return (
     <GlobalContext.Provider
       value={{
@@ -118,7 +123,8 @@ const GlobalContextProvider: React.FC<ContextTypeMangerProps> = ({ children }) =
         email,password,
         todos,
         RecentS,setRecents,
-        MyTasks,AddTask
+        MyTasks,AddTask,
+        name
       }}
     >
       {children}
