@@ -31,6 +31,13 @@ const router = createBrowserRouter([
       <LogOutPage/>
     </>
   }
+  ,{
+    path:"/profile",
+    element:
+    <>
+      <ProfilePage/>
+    </>
+  }
 ])
 const App:React.FC = () => {
   return (
