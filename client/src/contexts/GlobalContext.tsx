@@ -5,6 +5,9 @@ interface Test {
 }
 interface LoginDetails {
   isLoggedIn: boolean;
+
+  SearchEng : string;
+  SEs : Array<string>;
 }
 interface Data{
   myApps:Array<{ URL:string,
@@ -112,6 +115,12 @@ const GlobalContextProvider: React.FC<ContextTypeMangerProps> = ({ children }) =
     )
     const name = 
     storedData.name;
+    const SEs = 
+    ["https://www.bing.com/search?q=","https://www.google.com/search?q="
+    ,"https://in.search.yahoo.com/search?p","https://www.info.com/serp?q=$"
+    ,"https://duckduckgo.com/?q=$"]
+    const er = localStorage.getItem('SE');
+    const SearchEng = er ? SEs[JSON.parse(er)] : SEs[1];
   return (
     <GlobalContext.Provider
       value={{
@@ -124,7 +133,8 @@ const GlobalContextProvider: React.FC<ContextTypeMangerProps> = ({ children }) =
         todos,
         RecentS,setRecents,
         MyTasks,AddTask,
-        name
+        name,SearchEng,
+        SEs
       }}
     >
       {children}

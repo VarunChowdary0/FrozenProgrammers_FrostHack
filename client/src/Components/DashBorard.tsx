@@ -17,10 +17,10 @@ const DashBorard:React.FC = () => {
     const [showNewsFeed,setNewsFeed] = useState<boolean>(false);
     const [SearchKey,setSearchKey] = useState<string>("");
 
-    const googleURL = "https://www.google.com/search?q=";
+    const {SearchEng} = useContext<any>(GlobalContext);
     const SearchNow =()=>{
         if(SearchKey.trim()!==""){
-            const lin = `${googleURL}${encodeURIComponent(SearchKey)}`
+            const lin = `${SearchEng}${encodeURIComponent(SearchKey)}`
             window.open(lin,"_blank");
             setRecents([...RecentS,SearchKey]);
             setSearchKey("");
@@ -48,7 +48,7 @@ const DashBorard:React.FC = () => {
                 <TimeWidget/>
             </div>
             <div className=' w-fit h-fit'>
-                <RecentSearches RecentS={RecentS} AddRecent={setRecents} SearchEng={googleURL}/>
+                <RecentSearches RecentS={RecentS} AddRecent={setRecents} SearchEng={SearchEng}/>
             </div>
         </div>
         <div className=' w-full h-[200px] bg-black/0 flex items-center justify-around gap-5'>
