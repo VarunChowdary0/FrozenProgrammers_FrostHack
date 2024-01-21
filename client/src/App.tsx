@@ -8,6 +8,7 @@ import DashBorard from './Components/DashBorard';
 import MenuBar from './Components/MenuBar';
 import { GlobalContextProvider } from './contexts/GlobalContext';
 import LogOutPage from './Components/LogOutPage';
+import ProfilePage from './Components/ProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,13 @@ const router = createBrowserRouter([
     element:
     <>
       <LogOutPage/>
+    </>
+  }
+  ,{
+    path:"/profile",
+    element:
+    <>
+      <ProfilePage/>
     </>
   }
 ])
