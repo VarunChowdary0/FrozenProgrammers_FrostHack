@@ -103,24 +103,24 @@ const DashBorard:React.FC = () => {
     <div className=' h-screen w-full p-2 bg-[#f4f2f5] 
     overflow-hidden flex flex-col'>
         <div className='  max-sm:mt-14 max-sm:pb-5  bg-red-400/0 overflow-x-auto overflow-y-hidden 
-        w-full max-sm:w-screen  flex items-center justify-around  h-[220px]
-        max-sm:gap-5 '>
-            <div className=' max-sm:w-screen w-fit bg-white/0 mb-7'>
+        w-full max-sm:w-screen  flex items-center justify-around  h-[220px] snap-x snap-mandatory
+        max-sm:gap-5 max-sm:pr-10'>
+            <div className=' snap-center max-sm:w-screen w-fit bg-white/0 mb-7'>
                 <div className=' scale-[0.7] '>
                     <Weather/>
                 </div>
             </div>
-            <div className=' max-sm:w-screen min-h-[200px] h-[80%] w-[350px]
+            <div className=' snap-center max-sm:w-screen min-h-[200px] h-[80%] w-[350px]
                rounded-md p-2 flex '>
                   <TodoWidget
                     MyTasks={MyTasks}
                     AddTask={AddTask}
                   />
             </div>
-            <div className=' max-sm:w-screen w-fit  '>
+            <div className=' snap-center max-sm:w-screen w-fit  '>
                 <TimeWidget/>
             </div>
-            <div className=' w-fit h-fit'>
+            <div className=' snap-center w-fit h-fit'>
                 <RecentSearches RecentS={RecentS} AddRecent={setRecents} SearchEng={SearchEng}/>
             </div>
         </div>
