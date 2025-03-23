@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { GlobalContext } from '../contexts/GlobalContext';
+"use client"
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React, { useState } from 'react'
 
 const MenuBar:React.FC = () => {
     const [showMenu,setMenu] = useState<boolean>(false);
-    const {isLoggedIn} = useContext<any>(GlobalContext);
-    const loc = window.location.pathname;
-    useEffect(()=>{
-        if(!isLoggedIn && window.location.pathname !== '/register'){
-            // window.location.href = "/register"
-        }
-    })
+    const loc = usePathname();
+    
   return (
     <>
     <div>
@@ -19,31 +16,21 @@ const MenuBar:React.FC = () => {
              pt-[80px] text-white text-2xl gap-12
             bg-[#202020] flex items-center flex-col
             '>
-                <a href="/">
+                <Link href="/">
                     <p className={`${!(loc==='/')?" opacity-60":""}`}>
                         Home
                     </p>
-                </a>
-                <a href="/profile">
-                <p className={`${!(loc==='/profile')?" opacity-60":""}`}>
-                        Profile
-                    </p>
-                </a>
-                <a href="/settings">
+                </Link>
+                <Link href="/settings">
                 <p className={`${!(loc==='/settings')?" opacity-60":""}`}>
                         Settings
                     </p>
-                </a>
-                <a href="/settings/customize">
+                </Link>
+                <Link href="/settings/customize">
                 <p className={`${!(loc==='/settings/customize')?" opacity-60":""}`}>
                         Customize
                     </p>
-                </a>
-                <a href="/logout">
-                <p className={`${!(loc==='/logout')?" opacity-60":""}`}>
-                        Log Out
-                    </p>
-                </a>
+                </Link>
             </div>
             <div onClick={()=>{
                 setMenu(false);

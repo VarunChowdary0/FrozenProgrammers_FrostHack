@@ -1,22 +1,19 @@
 import { Task, TaskStatus } from '@/types/type';
-import { CheckIcon, TargetIcon } from 'lucide-react';
-import React, { use, useEffect, useRef, useState } from 'react'
+import { CheckIcon, TargetIcon, Trash2 } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react'
 
 interface CurrentProps{
     MyTasks:Task[];
-    AddTask:React.Dispatch<React.SetStateAction<Task[]>>;
-
+    UpdateTasks:React.Dispatch<React.SetStateAction<Task[]>>;
+    idx : number;
     setPopUp : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddTaskPopUp:React.FC<CurrentProps> = (props) => {
-    const [NewTask,setNewTask] = useState<Task>({
-        task : "",
-        date : new Date().toDateString(),
-        reminder : "Pending",
-        status  : TaskStatus.Pending
-    });
-
+const EditTaskPopUp:React.FC<CurrentProps> = (props) => {
+    const [CurrentTask,setCurrentTask] = useState<Task>(props.MyTasks[props.idx]);
+    const remove = (id:number) => {
+        props.UpdateTasks([...props.MyTasks.slice(0, id), ...props.MyTasks.slice(id + 1)]);
+    }
 
     const input = useRef<HTMLTextAreaElement>(null);
     useEffect(()=>{
@@ -39,26 +36,26 @@ const AddTaskPopUp:React.FC<CurrentProps> = (props) => {
         props.setPopUp(false);
     }
     const handleSave = () => {
-        props.AddTask([...props.MyTasks,NewTask]);
-        setNewTask({
-            task : "",
-            date : new Date().toDateString(),
-            reminder : "Pending",
-            status  : TaskStatus.Pending
-        })
+        props.UpdateTasks(
+            [
+                ...props.MyTasks.slice(0,props.idx),
+                CurrentTask,
+                ...props.MyTasks.slice(props.idx+1)
+            ]
+        );
         closePopup();
     }
 
 
     useEffect(()=>{
-        if(NewTask.status === TaskStatus.Pending && NewTask.reminder !== ""){
-            setNewTask({
-                ...NewTask,
+        if(CurrentTask.status === TaskStatus.Pending && CurrentTask.reminder !== ""){
+            setCurrentTask({
+                ...CurrentTask,
                 reminder : ""
             })
         }
-        console.log(NewTask);
-    },[NewTask])
+        console.log(CurrentTask);
+    },[CurrentTask])
   return (
     <>
         <div onClick={closePopup} className='fixed top-0 bottom-0 left-0 right-0 backdrop-blur-sm
@@ -74,37 +71,45 @@ const AddTaskPopUp:React.FC<CurrentProps> = (props) => {
             </div>
             <div className=' flex relative flex-col gap-3 items-start'>
                 <textarea ref={input} placeholder='My Task'
-                    style={{
-                        height : NewTask.task.length/2 + 50
-                    }}
                     onChange={(e)=>
                         {
-                            setNewTask(
+                            setCurrentTask(
                                 {
-                                    ...NewTask,
+                                    ...CurrentTask,
                                     task:e.target.value
                                 }
                             )}
                         } 
+                    style={{
+                        height : CurrentTask.task.length/2 + 50
+                    }}
                     className=' border rounded-md py-2 w-[400px] px-4 outline-none'
-                    value={NewTask.task}
+                    value={CurrentTask.task}
                 />
 
-                {/* <select value={NewTask.status} className=' border outline-none rounded-md 
-                px-2 py-1 w-[200px]'>
+                <select value={CurrentTask.status} className=' border outline-none rounded-md 
+                px-2 py-1 w-[200px]' onChange={(e)=>{
+                    setCurrentTask(
+                        {
+                            ...CurrentTask,
+                            status:e.target.value as TaskStatus
+                        }
+                    )
+                }}>
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
-                    <option value="RemindLater">Remind Later</option>
-                </select> */}
+                </select>
+
+
                 <div className=' flex gap-4'>
                     <div className=' flex gap-1'>
                         <input type='radio' id='radio_sts'
                         defaultChecked 
                         name='ststs' value={TaskStatus.Pending}
                         onChange={(e)=>{
-                            setNewTask(
+                            setCurrentTask(
                                 {
-                                    ...NewTask,
+                                    ...CurrentTask,
                                     status:TaskStatus.Pending
                                 }
                             )}
@@ -114,17 +119,17 @@ const AddTaskPopUp:React.FC<CurrentProps> = (props) => {
                     <div className=' flex gap-1'>
                         <input type='radio' id='radio_rm' 
                         name='ststs' value={TaskStatus.RemindLater}
-                        onChange={(e)=>{setNewTask({...NewTask,status:TaskStatus.RemindLater})}}/>
+                        onChange={(e)=>{setCurrentTask({...CurrentTask,status:TaskStatus.RemindLater})}}/>
                         <label htmlFor="radio_rm">Reminder ?</label>
                     </div>
                 </div>
 
-                {NewTask.status === TaskStatus.RemindLater &&
+                {CurrentTask.status === TaskStatus.RemindLater &&
                     <div className=' border rounded-md px-2 py-1 w-[230px]'>
                         <input type="datetime-local" onChange={(e)=>{
-                            setNewTask(
+                            setCurrentTask(
                                 {
-                                    ...NewTask,
+                                    ...CurrentTask,
                                     reminder:e.target.value
                                 }
                             )
@@ -134,16 +139,20 @@ const AddTaskPopUp:React.FC<CurrentProps> = (props) => {
               
             </div>
             <abbr title="click to save">
-                <div onClick={handleSave} className={`${(NewTask.task.trim() !== "") ?
+                <div onClick={handleSave} className={`${(CurrentTask.task.trim() !== "") ?
                     "bg-black text-white" : " text-gray-600 bg-[#69696938]"} p-1
                         rounded-full absolute right-2 bottom-2`}>
                     <CheckIcon size={20}/>
                 </div>
-            </abbr>  
+            </abbr> 
+            <div className=' absolute top-2 right-3 hover:bg-red-500
+             transition-all hover:cursor-pointer bg-orange-400 py-0.5 px-2 rounded-full' onClick={()=>remove(props.idx)}>
+                    <Trash2 className=' w-3.5 active:scale-110 text-white'/>
+            </div>
             </div>
         </div>
     </>
   )
 }
  
-export default AddTaskPopUp
+export default EditTaskPopUp;

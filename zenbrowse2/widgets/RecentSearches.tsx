@@ -17,20 +17,19 @@ const RecentSearches:React.FC<CurrentProps> = (props) => {
 const removeThis = (id:number) =>{
   props.AddRecent([...props.RecentS.slice(0, id), ...props.RecentS.slice(id + 1)]);
 }
-console.log(props.RecentS);
+// console.log(props.RecentS);
   return (
     <div className=' h-[200px] w-[300px] rounded-md snap-y
-     bg-white p-3 flex flex-col gap-[10px] overflow-y-auto pt-0'>
+     bg-white flex flex-col gap-[10px] overflow-y-auto pt-0'>
         <div className=' text-xl mb-2 pl-2 font-semibold text-[#302f2f]
          flex items-center gap-4 sticky 
-          z-20
          top-0 left-2 w-full bg-white pt-2'>
             <p>Recents</p>
             <div className=' scale-150'>
                 <ClockIcon/>
             </div>
         </div>
-       <div className=' flex  flex-col-reverse gap-4'>
+       <div className=' flex px-3  flex-col-reverse gap-4'>
        {
             props.RecentS.map((recent,idx)=>
             <div key={"RecentSearch_"+idx}
@@ -40,7 +39,7 @@ console.log(props.RecentS);
                 onClick={()=>{
                   SearchNow(idx);
                 }}
-                 className=' font-thin w-full'>{recent}</p>
+                 className=' font-thin w-full truncate'>{recent}</p>
                 <div className=' fill-black scale-125'>
                     <SearchIcon/>
             </div>

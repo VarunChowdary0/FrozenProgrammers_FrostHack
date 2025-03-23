@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import React, { useState } from 'react'
-import { create_my_Account, login_to_account } from '../Controllers/RegisterController';
 
 const Regiter:React.FC = () => {
     const [isSigningUP,setSigning] = useState<boolean>(true);
@@ -11,38 +11,14 @@ const Regiter:React.FC = () => {
     const [isLoading,setLoad] = useState<boolean>(false);
     const toggle = () =>{
         setSigning(!isSigningUP);
+        setFlasher("");
     }
     const SignUP = async  () => {
         setLoad(true);
         if(fullName.trim()!==""){
             if(Email.trim()!==""){
                 if(password.trim().length > 7){
-                   await create_my_Account(fullName,Email,password)
-                    .then((res)=>{
-                    setLoad(false);
-                        console.log(res);
-                        if(res.status){
-                            setFlasher("Account created");
-                            setTimeout(()=>{
-                                setFlasher("");
-                                setSigning(false);
-                            },1000);
-                        }
-                        else{
-                            setFlasher("Something went wrong !");
-                        setTimeout(()=>{
-                            setFlasher("");
-                        },1000);
-                        }
-                    })
-                    .catch((err)=>{
-                    setLoad(false);
-                        console.log(err);
-                        setFlasher("Something went wrong !");
-                        setTimeout(()=>{
-                            setFlasher("");
-                        },1000);
-                    })
+                //    await create_my_Account(fullName,Email,password)
                 }
                 else{
                     console.log("Short PW");
@@ -60,35 +36,7 @@ const Regiter:React.FC = () => {
         setLoad(true);
         if(Email.trim()!==""){
             if(password.trim().length>7){
-                login_to_account(Email,password)
-                .then((res)=>{
-                    setLoad(false);
-                        console.log(res.data);
-                        localStorage.setItem("MyPageData",JSON.stringify(res.data));
-                        localStorage.setItem("logInStatus_",JSON.stringify(true));
-                        if(res.status){
-                            setFlasher("Login Sussess");
-                            setTimeout(()=>{
-                                setFlasher("");
-                                setSigning(false);
-                                window.location.href="/";
-                            },1500);
-                        }
-                        else{
-                            setFlasher("Incorrect Credentials !");
-                        setTimeout(()=>{
-                            setFlasher("");
-                        },1000);
-                        }
-                    })
-                    .catch((err)=>{
-                    setLoad(false);
-                        console.log(err);
-                        setFlasher("Incorrect Credentials !");
-                        setTimeout(()=>{
-                            setFlasher("");
-                        },1000);
-                    })
+                // login_to_account(Email,password)
             }
         }
     }
@@ -96,8 +44,11 @@ const Regiter:React.FC = () => {
     <>
        <div className=' h-screen w-full flex items-center justify-center gap-10'>
         <div className=' h-full relative'>
-            <img className=' scale-75 h-full max-sm:hidden' src="
-                https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png            "
+            <Image
+                width={2000}
+                height={2000}
+             className=' scale-75 h-full max-sm:hidden' 
+             src="https://i.ibb.co/QbRfj6W/GOLDEN-HOUR-1.png"
             alt="NF" />
             {/* <p className=' absolute top-[300px] text-6xl text-center text-dark_bg_secondry/40 font-bold'>
             Elevating web navigation through seamless innovation.
@@ -169,7 +120,7 @@ const Regiter:React.FC = () => {
                             <div className=' w-full text-center'>Loading...</div>:
                             <div onClick={SignUP} className="flex w-full justify-center rounded-md bg-indigo-600
                               py-1.5 text-sm font-semibold leading-6 text-white shadow-sm px-3
-                              hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
+                              hover:bg-indigo-500 outline focus-visible:outline-2
                                focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</div>
                             }
                         </div>
@@ -237,7 +188,7 @@ const Regiter:React.FC = () => {
                             :
                             <div onClick={Login} className="flex w-full justify-center rounded-md bg-indigo-600
                               py-1.5 text-sm font-semibold leading-6 text-white shadow-sm px-3
-                              hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
+                              hover:bg-indigo-500 outline focus-visible:outline-2
                                focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</div>
                             }
                         </div>

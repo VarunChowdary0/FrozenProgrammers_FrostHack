@@ -1,4 +1,6 @@
-import React, {  useContext, useState } from 'react'
+"use client"
+
+import React, { useEffect, useRef, useState } from 'react'
 import Weather from '../widgets/Wether'
 import TodoWidget from '../widgets/TodoWidget'
 import TimeWidget from '../widgets/TimeWidget'
@@ -7,17 +9,32 @@ import SearchIcon from '../icons/SearchIcon'
 import BookMarkComp from '../widgets/BookMarkComp'
 import ArrowIcon from '../icons/ArrowIcon'
 import NewsFeed from './NewsFeed'
-import { GlobalContext } from '../contexts/GlobalContext'
 import AddNewBookMark from '../PopUps/AddNewBookMark'
-import AddSync from '../Controllers/AddSync'
+import { Def } from '@/constants'
+import { App, Task } from '@/types/type'
+import Image from 'next/image'
+import Loading from '@/widgets/Loading'
+// import AddSync from '../Controllers/AddSync'
 
 const DashBorard:React.FC = () => {
-    const {myApps,setMyApps,RecentS,setRecents} = useContext<any>(GlobalContext) 
-    console.log(RecentS)
+
+    const input = useRef<HTMLInputElement>(null);
+    useEffect(()=>{
+        setTimeout(()=>{
+            input.current?.focus();
+        },700);
+    },[]);
+
+    const [isLoaded,setLoaded] = useState<boolean>(false);
+
+    const [myApps,setMyApps] = useState<App[]>(Def);
+
+    const [RecentS,setRecents] = useState<Array<string>>([]);
+    const [MyTasks,AddTask] = useState<Array<Task>>([])
     const [showNewsFeed,setNewsFeed] = useState<boolean>(false);
     const [SearchKey,setSearchKey] = useState<string>("");
 
-    const {SearchEng} = useContext<any>(GlobalContext);
+    const SearchEng = "https://www.google.com/search?q=";
     const SearchNow =()=>{
         if(SearchKey.trim()!==""){
             const lin = `${SearchEng}${encodeURIComponent(SearchKey)}`
@@ -28,6 +45,48 @@ const DashBorard:React.FC = () => {
     }
 
     const [showNewAddwr,setShow] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const stored = localStorage.getItem("MyPageData");
+            console.log(stored)
+            if (stored) {
+                try {
+                    const parsedData = JSON.parse(stored);
+                    console.log(parsedData.todos)
+                    setMyApps(parsedData.Bookmarks || []);
+                    setRecents(parsedData.Recents || []);
+                    AddTask(parsedData.todos || []);
+                } catch (error) {
+                    console.error("Error parsing localStorage data:", error);
+                }
+            }
+            setLoaded(true);
+        }
+    }, []);
+
+    useEffect(()=>{
+        const DATA = {
+            todos:MyTasks,
+            Recents:RecentS,
+            Bookmarks : myApps
+        }
+        if(isLoaded){
+            console.log("Ready to save",DATA);
+            localStorage.setItem("MyPageData",JSON.stringify(DATA));
+        }
+        else{
+            console.log("Not Ready to save",DATA);
+        }
+    },[MyTasks,RecentS,myApps,isLoaded])
+
+    if(!isLoaded){
+        return (
+        <div className='w-full h-screen flex items-center justify-center'>
+            <Loading/>
+        </div>
+        );
+    }
 
   return (
     <div className=' h-screen w-full p-2 bg-[#f4f2f5] 
@@ -42,7 +101,10 @@ const DashBorard:React.FC = () => {
             </div>
             <div className=' max-sm:w-screen min-h-[200px] h-[80%] w-[350px]
                rounded-md p-2 flex '>
-                  <TodoWidget/>
+                  <TodoWidget
+                    MyTasks={MyTasks}
+                    AddTask={AddTask}
+                  />
             </div>
             <div className=' max-sm:w-screen w-fit  '>
                 <TimeWidget/>
@@ -51,13 +113,17 @@ const DashBorard:React.FC = () => {
                 <RecentSearches RecentS={RecentS} AddRecent={setRecents} SearchEng={SearchEng}/>
             </div>
         </div>
-        <div className=' w-full h-[200px] bg-black/0 flex items-center justify-around gap-5'>
+        <div className=' select-none w-full h-[200px] bg-black/0 flex items-center justify-around gap-5'>
             <div className='w-[500px] h-fit'>
-                <img className=''
+                <Image
+                width={1000}
+                height={1000}
+                 className=''
                  src="https://i.ibb.co/gWTpW9X/Untitled-design-removebg-preview.png" alt="" />
             </div>
             <div className=' h-[100px] flex-1 flex items-center  gap-5'>
                 <input 
+                ref={input}
                 onKeyDown={(e)=>{
                     if(e.key === "Enter"){
                         SearchNow();
@@ -68,7 +134,8 @@ const DashBorard:React.FC = () => {
                     setSearchKey(e.target.value);
                 }} 
                 className=' py-3 w-[400px] transition-all
-                hover:w-[550px] duration-300 focus:w-[550px] rounded-full px-5 outline-none shadow-sm'
+                hover:w-[550px] duration-300 focus:w-[550px]
+                 bg-white rounded-full px-5 outline-none shadow-xs'
                  />
                  <div onClick={SearchNow} className='scale-[2] fill-[#b2b2b2] hover:cursor-pointer'>
                     <SearchIcon/>
@@ -76,8 +143,12 @@ const DashBorard:React.FC = () => {
             </div>
         </div>
         <div className=' max-h-[30vh] w-full bg-fuchsia-400/0 py-3 flex justify-center'>
-            <div className=' w-[80%] h-full flex flex-wrap gap-8 overflow-y-scroll snap-y'>
-                {myApps.map((app:any,idx:number)=>
+            <div className=' w-[82%] pr-1 h-full flex flex-wrap gap-8 overflow-y-scroll snap-y'>
+                {myApps.map((app:{
+                    URL : string,
+                    title : string,
+                    useCount : number
+                },idx:number)=>
                     <div key={"App_"+idx} className=' snap-start'>
                         <BookMarkComp idx={idx} setMyApps={setMyApps} 
                         myApps={myApps} URL={app.URL} title={app.title}/>
@@ -85,7 +156,7 @@ const DashBorard:React.FC = () => {
                 )}
                 <div className=' h-fit w-fit flex flex-col gap-2'>
             <div  onClick={()=>{setShow(true)}}
-            className=' h-[70px] w-[70px] bg-white dark:bg-[#2d2b2b]
+            className=' h-[70px] w-[70px] bg-white 
             rounded-xl flex items-center justify-center text-2xl'>
                 +
                     </div>
@@ -111,7 +182,7 @@ const DashBorard:React.FC = () => {
          </div>
          
          {showNewAddwr&&<AddNewBookMark AddApps={setMyApps} AllApps={myApps} setShow={setShow}/>}
-         <AddSync/>
+         {/* <AddSync/> */}
     </div>
   )
 }
