@@ -29,6 +29,8 @@ const DashBorard:React.FC = () => {
 
     const [myApps,setMyApps] = useState<App[]>(Def);
 
+    const [fileredApps,setFiltered] = useState<App[]>(myApps);
+
     const [RecentS,setRecents] = useState<Array<string>>([]);
     const [MyTasks,AddTask] = useState<Array<Task>>([])
     const [showNewsFeed,setNewsFeed] = useState<boolean>(false);
@@ -49,7 +51,7 @@ const DashBorard:React.FC = () => {
     useEffect(() => {
         if (typeof window !== "undefined") {
             const stored = localStorage.getItem("MyPageData");
-            console.log(stored)
+            // console.log(stored)
             if (stored) {
                 try {
                     const parsedData = JSON.parse(stored);
@@ -64,6 +66,15 @@ const DashBorard:React.FC = () => {
             setLoaded(true);
         }
     }, []);
+
+    useEffect(()=>{
+        const filteredApps = myApps.filter((app)=>{
+            return app.title.toLowerCase().includes(SearchKey.toLowerCase()) 
+            || app.URL.toLowerCase().includes(SearchKey.toLowerCase());
+        }
+        );
+        setFiltered(filteredApps);
+    },[myApps,SearchKey])
 
     useEffect(()=>{
         const DATA = {
@@ -91,7 +102,7 @@ const DashBorard:React.FC = () => {
   return (
     <div className=' h-screen w-full p-2 bg-[#f4f2f5] 
     overflow-hidden flex flex-col'>
-        <div className='   bg-red-400/0 overflow-x-auto overflow-y-hidden 
+        <div className='  max-sm:mt-14 max-sm:pb-5  bg-red-400/0 overflow-x-auto overflow-y-hidden 
         w-full max-sm:w-screen  flex items-center justify-around  h-[220px]
         max-sm:gap-5 '>
             <div className=' max-sm:w-screen w-fit bg-white/0 mb-7'>
@@ -113,8 +124,8 @@ const DashBorard:React.FC = () => {
                 <RecentSearches RecentS={RecentS} AddRecent={setRecents} SearchEng={SearchEng}/>
             </div>
         </div>
-        <div className=' select-none w-full h-[200px] bg-black/0 flex items-center justify-around gap-5'>
-            <div className='w-[500px] h-fit'>
+        <div className=' select-none w-full h-[200px] max-sm:h-[100px] bg-black/0 flex items-center justify-around gap-5'>
+            <div className='w-[500px] h-fit max-sm:hidden'>
                 <Image
                 width={1000}
                 height={1000}
@@ -133,7 +144,9 @@ const DashBorard:React.FC = () => {
                 onChange={(e)=>{
                     setSearchKey(e.target.value);
                 }} 
-                className=' py-3 w-[400px] transition-all
+                className=' py-3 w-[400px] 
+                max-sm:w-[300px] max-sm:hover:w-[300px] max-sm:focus:w-[300px] 
+                transition-all
                 hover:w-[550px] duration-300 focus:w-[550px]
                  bg-white rounded-full px-5 outline-none shadow-xs'
                  />
@@ -142,9 +155,10 @@ const DashBorard:React.FC = () => {
                  </div>
             </div>
         </div>
-        <div className=' max-h-[30vh] w-full bg-fuchsia-400/0 py-3 flex justify-center'>
-            <div className=' w-[82%] pr-1 h-full flex flex-wrap gap-8 overflow-y-scroll snap-y'>
-                {myApps.map((app:{
+        <div className=' max-h-[30vh] max-sm:max-h-[50vh] w-full bg-fuchsia-400/0 py-3 flex justify-center'>
+            <div className=' w-[82%] max-sm:w-[90%] pr-1 h-full flex flex-wrap
+             max-sm:items-center max-sm:justify-center max-sm:gap-5 gap-8 overflow-y-scroll snap-y'>
+                {fileredApps.map((app:{
                     URL : string,
                     title : string,
                     useCount : number

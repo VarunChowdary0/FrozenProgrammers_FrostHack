@@ -24,11 +24,11 @@ const BookMarkComp:React.FC<CurrentProps> = (props) => {
     <div 
      className='group h-fit w-fit flex flex-col gap-2 relative'>
         <a href={props.URL}  target='_blank'
-        className=' group h-[70px] w-[70px] bg-white 
+        className=' group h-[70px] w-[70px] max-sm:h-[60px] max-sm:w-[60px] bg-white 
          rounded-xl flex items-center justify-center'>
            <img className=' w-[40px]' src={`${props.URL}favicon.ico`} alt="NF" /> 
         </a>
-        <p className=' max-w-[70px] truncate text-center'>{props.title}</p>
+        <p className=' max-w-[70px] truncate text-center max-sm:text-xs'>{props.title}</p>
         <div onClick={()=>{removeItem(props.idx)}} 
         className=' opacity-0 group-hover:cursor-pointer fill-white
          h-4 w-4 hover:opacity-100 absolute top-[-px] right-[-3px] 

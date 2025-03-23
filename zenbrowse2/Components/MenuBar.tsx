@@ -36,7 +36,9 @@ const MenuBar:React.FC = () => {
                 setMenu(false);
             }} className=' w-[80vw]  bg-black/0'></div>
         </div>
-        <div onClick={()=>{setMenu(true)}} className=' fixed top-5 left-3 px-2 p-1
+        <div onClick={()=>{setMenu(true)}} className=' hover:cursor-pointer fixed 
+         maxs-sm:top3
+        top-5 left-3 px-2 p-1
          rounded-md bg-indigo-600 text-white'>
             menu
         </div>

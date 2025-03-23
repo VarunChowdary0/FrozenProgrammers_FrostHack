@@ -80,7 +80,7 @@ const AddNewBookMark:React.FC<CurrentProps> = (props) => {
                     <div>
                         <div  onClick={handleSubmmit} className="flex w-full justify-center rounded-md bg-indigo-600
                         py-1.5 text-sm font-semibold leading-6 text-white shadow-sm px-3
-                        hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
+                        hover:bg-indigo-500 outline focus-visible:outline-2
                         focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</div>
                     </div>
                 </form>
